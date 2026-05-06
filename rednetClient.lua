@@ -17,7 +17,7 @@ repeat
 until false
 
 print("Connected as " .. username)
-print("Type /w <username> <message> for private messages")
+print("Type /w USERNAME MESSAGE for private messages")
 print("Type your message and press Enter to broadcast")
 
 local function parseInput(input)
