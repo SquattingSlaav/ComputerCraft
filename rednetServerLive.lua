@@ -9,7 +9,7 @@ local function broadcast(packet)
 end
 
 local function handleRegister(id, message)
-    if message.type ~= "register" then return end
+    if not (message.type == "register") then return end
 
     local username = message.username
     
@@ -28,7 +28,7 @@ local function handleRegister(id, message)
 end
 
 local function handleBroadcast(id, message)
-    if message.type ~= "broadcast" then return end
+    if not (message.type == "broadcast") then return end
 
     local username = ids[id]
     if username == nil then
@@ -41,7 +41,7 @@ local function handleBroadcast(id, message)
 end
 
 local function handleWhisper(id, message)
-    if message.type ~= "whisper" then return end
+    if not (message.type == "whisper") then return end
 
     local username = ids[id]
     if username == nil then
