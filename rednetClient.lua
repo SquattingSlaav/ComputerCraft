@@ -41,7 +41,7 @@ end
 local function receiveMessages()
     while true do
         local _, message = rednet.receive(PROTOCOL, 0.1)
-        if message and type(message) == "table" then
+        if message and type(message) == "table" and message.type then
             if message.type == "broadcast" then
                 if message.from ~= username then
                     print("[" .. (message.from or "Unknown") .. "]: " .. (message.msg or ""))
@@ -52,8 +52,6 @@ local function receiveMessages()
                 print("[SYSTEM]: " .. (message.msg or ""))
             elseif message.type == "error" then
                 print("[ERROR]: " .. (message.msg or ""))
-            else
-                print("[DEBUG] Unknown message type: " .. (message.type or "nil"))
             end
         end
     end
