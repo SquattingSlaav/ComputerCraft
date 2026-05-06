@@ -38,8 +38,9 @@ local function handleBroadcast(id, message)
         return
     end
 
-    print("[SERVER] Broadcast from " .. username .. ": " .. message.content)
-    broadcast({ type = "broadcast", from = username, msg = message.content })
+    local content = message.content or ""
+    print("[SERVER] Broadcast from " .. username .. ": " .. content)
+    broadcast({ type = "broadcast", from = username, msg = content })
 end
 
 local function handleWhisper(id, message)
