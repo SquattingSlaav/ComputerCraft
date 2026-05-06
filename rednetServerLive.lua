@@ -3,8 +3,10 @@ local clients = {}
 local ids = {}
 
 local function broadcast(packet)
-    for i, clientId in pairs(ids) do
-        rednet.send(clientId, packet, PROTOCOL)
+    for clientId, username in pairs(ids) do
+        if clientId and type(clientId) == "number" then
+            rednet.send(clientId, packet, PROTOCOL)
+        end
     end
 end
 
