@@ -7,7 +7,7 @@ local username
 repeat
     write("Enter username: ")
     username = read()
-    rednet.broadcast({ type = "register", username = username }, PROTOCOL)
+    rednet.send(SERVER_ID, { type = "register", username = username }, PROTOCOL)
     local _, response = rednet.receive(PROTOCOL)
     if response and response.type == "error" then
         print(response.msg)
@@ -67,7 +67,7 @@ local function handleInput()
         if input ~= "" then
             local message = parseInput(input)
             if message then
-                rednet.broadcast(message, PROTOCOL)
+                rednet.send(SERVER_ID, message, PROTOCOL)
             else
                 print("[ERROR] Invalid whisper format. Use: /w USERNAME MESSAGE")
             end
