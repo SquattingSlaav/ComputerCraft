@@ -3,7 +3,7 @@ local clients = {}
 local ids = {}
 
 local function broadcast(packet)
-    for _, clientId in pairs(clients) do
+    for i, clientId in pairs(ids) do
         rednet.send(clientId, packet, PROTOCOL)
     end
 end
