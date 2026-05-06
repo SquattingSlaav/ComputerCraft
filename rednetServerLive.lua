@@ -58,8 +58,9 @@ local function handleWhisper(id, message)
         return
     end
 
-    print("[SERVER] Whisper from " .. username .. " to " .. message.recipient .. ": " .. message.content)
-    rednet.send(recipientId, { type = "whisper", from = username, msg = message.content }, PROTOCOL)
+    local content = message.content or ""
+    print("[SERVER] Whisper from " .. username .. " to " .. message.recipient .. ": " .. content)
+    rednet.send(recipientId, { type = "whisper", from = username, msg = content }, PROTOCOL)
 end
 
 peripheral.find("modem", rednet.open)
