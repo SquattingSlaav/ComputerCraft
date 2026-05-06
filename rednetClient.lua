@@ -52,6 +52,8 @@ local function receiveMessages()
                 print("[SYSTEM]: " .. (message.msg or ""))
             elseif message.type == "error" then
                 print("[ERROR]: " .. (message.msg or ""))
+            else
+                print("[DEBUG] Unknown message type: " .. (message.type or "nil"))
             end
         end
     end
