@@ -30,6 +30,8 @@ local function parseInput(input)
             local recipient = parts[2]
             local content = table.concat(parts, " ", 3)
             return { type = "whisper", recipient = recipient, content = content }
+        else
+            return nil
         end
     else
         return { type = "broadcast", content = input }
@@ -42,14 +44,14 @@ local function receiveMessages()
         if message then
             if message.type == "broadcast" then
                 if message.from ~= username then
-                    print("[" .. (message.from or "Unknown") .. "]: " .. message.msg)
+                    print("[" .. (message.from or "Unknown") .. "]: " .. (message.msg or ""))
                 end
             elseif message.type == "whisper" then
-                print("[WHISPER from " .. (message.from or "Unknown") .. "]: " .. message.msg)
+                print("[WHISPER from " .. (message.from or "Unknown") .. "]: " .. (message.msg or ""))
             elseif message.type == "system" then
-                print("[SYSTEM]: " .. message.msg)
+                print("[SYSTEM]: " .. (message.msg or ""))
             elseif message.type == "error" then
-                print("[ERROR]: " .. message.msg)
+                print("[ERROR]: " .. (message.msg or ""))
             end
         end
     end
@@ -62,7 +64,11 @@ local function handleInput()
         
         if input ~= "" then
             local message = parseInput(input)
-            rednet.broadcast(message, PROTOCOL)
+            if message then
+                rednet.broadcast(message, PROTOCOL)
+            else
+                print("[ERROR] Invalid whisper format. Use: /w USERNAME MESSAGE")
+            end
         end
     end
 end
