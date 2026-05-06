@@ -41,7 +41,7 @@ end
 local function receiveMessages()
     while true do
         local _, message = rednet.receive(PROTOCOL, 0.1)
-        if message then
+        if message and type(message) == "table" then
             if message.type == "broadcast" then
                 if message.from ~= username then
                     print("[" .. (message.from or "Unknown") .. "]: " .. (message.msg or ""))
