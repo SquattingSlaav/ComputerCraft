@@ -41,17 +41,19 @@ end
 local function receiveMessages()
     while true do
         local _, message = rednet.receive(PROTOCOL, 0.1)
-        if message and type(message) == "table" and message.type then
-            if message.type == "broadcast" then
-                if message.from ~= username then
-                    print("[" .. (message.from or "Unknown") .. "]: " .. (message.msg or ""))
+        if message then
+            if type(message) == "table" and message.type then
+                if message.type == "broadcast" then
+                    if message.from ~= username then
+                        print("[" .. (message.from or "Unknown") .. "]: " .. (message.msg or ""))
+                    end
+                elseif message.type == "whisper" then
+                    print("[WHISPER from " .. (message.from or "Unknown") .. "]: " .. (message.msg or ""))
+                elseif message.type == "system" then
+                    print("[SYSTEM]: " .. (message.msg or ""))
+                elseif message.type == "error" then
+                    print("[ERROR]: " .. (message.msg or ""))
                 end
-            elseif message.type == "whisper" then
-                print("[WHISPER from " .. (message.from or "Unknown") .. "]: " .. (message.msg or ""))
-            elseif message.type == "system" then
-                print("[SYSTEM]: " .. (message.msg or ""))
-            elseif message.type == "error" then
-                print("[ERROR]: " .. (message.msg or ""))
             end
         end
     end

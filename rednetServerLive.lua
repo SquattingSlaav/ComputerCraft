@@ -2,9 +2,9 @@ local PROTOCOL = "geekChat_v1"
 local clients = {}
 local ids = {}
 
-local function broadcast(packet)
+local function broadcast(packet, excludeId)
     for clientId, username in pairs(ids) do
-        if clientId and type(clientId) == "number" then
+        if clientId and type(clientId) == "number" and clientId ~= excludeId then
             rednet.send(clientId, packet, PROTOCOL)
         end
     end
@@ -40,7 +40,7 @@ local function handleBroadcast(id, message)
 
     local content = message.content or ""
     print("[SERVER] Broadcast from " .. username .. ": " .. content)
-    broadcast({ type = "broadcast", from = username, msg = content })
+    broadcast({ type = "broadcast", from = username, msg = content }, id)
 end
 
 local function handleWhisper(id, message)
