@@ -3,6 +3,7 @@ local clients = {}
 local ids = {}
 
 local function broadcast(packet, excludeId)
+    if not packet or not packet.type then return end
     for clientId, username in pairs(ids) do
         if clientId and type(clientId) == "number" and clientId ~= excludeId then
             rednet.send(clientId, packet, PROTOCOL)
